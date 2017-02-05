@@ -13,7 +13,7 @@ class Województwo:
         self.typ = typ
 
     def __repr__(self):
-        return "{} {}".format(self.nazwa, self.typ)
+        return "{}, {}".format(self.nazwa, self.typ)
 
     @classmethod
     def make_list_of_objects(self, list_of_lists):
@@ -61,7 +61,6 @@ class Województwo:
         '''
         more_than_one = []
         count_name_list = Counter([x.nazwa for x in list_of_objects]).most_common()
-
         for item in count_name_list:
             if int(item[1])>1:
                 more_than_one.append(item[0])
@@ -79,6 +78,7 @@ class Województwo:
             if search_string in item.nazwa:
                 search_list.append(item)
         search_list_sorted = (sorted(sorted(search_list, key=getKey2),key=getKey))
+        print("\n{} location(s) founded: \n".format(len(search_list)))
         for num, item in enumerate(search_list_sorted):
             print("{}. {}".format(num+1, item))
 
