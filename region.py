@@ -1,11 +1,12 @@
 from ui import *
 from collections import Counter
-from operator import itemgetter
+from tabulate import tabulate
 
 
-class Województwo:
+
+class Wojewodztwo:
     '''
-    class for Województwo.
+    class for Wojewodztwo.
     '''
     def __init__(self, woj, nazwa, typ):
         self.woj = woj
@@ -22,14 +23,14 @@ class Województwo:
         '''
         list_of_objects = []
         for item in list_of_lists:
-            obj = Gmina(item[0], item[1], item[2], item[3], item[4], item[5])
+            obj = EachRegion(item[0], item[1], item[2], item[3], item[4], item[5])
             list_of_objects.append(obj)
         return list_of_objects
 
     @classmethod
     def list_statictics(self, list_of_objects):
         '''
-        Returns list with all types of items.
+        Returns list with all types of items (item.typ).
         '''
         return Counter([x.typ for x in list_of_objects]).most_common()
 
@@ -48,11 +49,12 @@ class Województwo:
     @classmethod
     def three_cities_with_longest_name(self, list_of_objects):
         '''
-        Returns three items with longest name (item.nazwa)
+        Returns three items with the longest name (item.nazwa)
         '''
         three_names = sorted([x.nazwa for x in list_of_objects if x.typ == "miasto"], key=getKey3, reverse = True)
         for num, item in enumerate(three_names[:3]):
             print("{}. {}".format(num+1, item))
+
 
     @classmethod
     def more_than_one_category(self, list_of_objects):
@@ -78,17 +80,17 @@ class Województwo:
             if search_string in item.nazwa:
                 search_list.append(item)
         search_list_sorted = (sorted(sorted(search_list, key=getKey2),key=getKey))
-        print("\n{} location(s) founded: \n".format(len(search_list)))
-        for num, item in enumerate(search_list_sorted):
-            print("{}. {}".format(num+1, item))
+        print("\n\033[1;37;49m{} location(s) founded:\033[0;37;49m\n".format(len(search_list)))
+        search_list = [[x.nazwa, x.typ] for x in search_list_sorted]
+        return search_list
 
 
-class Powiat(Województwo):
+class Powiat(Wojewodztwo):
     '''
     class for Powiat.
     '''
     def __init__(self, woj, pow, nazwa, typ):
-        Województwo.__init__(self, woj, nazwa, typ)
+        Wojewodztwo.__init__(self, woj, nazwa, typ)
         self.pow = pow
 
 
